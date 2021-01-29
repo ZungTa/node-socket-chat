@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js" integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js" integrity="sha512-+l9L4lMTFNy3dEglQpprf7jQBhQsQ3/WvOnjaN/+/L4i0jOstgScV0q2TjfvRF4V+ZePMDuZYIQtg5T4MKr+MQ=="
+    crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="app-container">
+    <div class="loom-list-container">
+      <button class="btn-connect">접속</button>
+      <label for="nameer">Name</label>
+      <input name="nameer" type="text" class="name-input">
+      <select size="6" class="loom-list">
+        <option>chat 1</option>
+        <option>chat 2</option>
+        <option>chat 3</option>
+      </select>
+    </div>
+    <div class="chat-container">
+      <div>현재 채팅방: <span id="current-loom"></span></div>
+      <div class="chats-wrap">
+        <div class="chats">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', start);
+  async function start() {
+    console.log('load');
+    const socket = io('http://localhost:8080/');
+    // io.connect('http://localhost:8080');
+    console.dir(socket);
+
+    socket.on('chat message', (arg) => {
+      console.log('on ', arg);
+    });
+
+    socket.emit('chat message', 'hi');
+
+    // let response = await axios.get('http://localhost:8080/');
+    // console.log('res? ', response);
+  }
+
+  // 접속되면 Name disable
+</script>
+
+<style>
+  .app-container {
+    padding: 100px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .loom-list-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .loom-list-container .btn-connect {
+    margin-bottom: 30px;
+    width: 150px;
+  }
+
+  .loom-list-container .name-input {
+    margin-bottom: 30px;
+  }
+
+  .chat-container {
+    flex: 1;
+    margin-left: 50px;
+  }
+</style>
